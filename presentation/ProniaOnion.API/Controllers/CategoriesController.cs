@@ -39,8 +39,8 @@ namespace ProniaOnion.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateCategoryDto categoryDTO)
         {
-            if (!await _categoryService.CreateCategoryAsync(categoryDTO))
-                return BadRequest();
+            //if (!await _categoryService.CreateAsync(categoryDTO))
+            //    return BadRequest();
 
             return StatusCode(StatusCodes.Status201Created);
         }

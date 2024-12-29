@@ -6,7 +6,7 @@ namespace ProniaOnion.Application.Abstractions.Services
     {
         Task<IEnumerable<CategoryItemDto>> GetAllAsync(int page, int take);
         Task<GetCategoryDto> GetByIdAsync(int id);
-        Task<bool> CreateCategoryAsync(CreateCategoryDto categoryDTO);
+        Task CreateAsync(CreateCategoryDto categoryDto);
         Task UpdateCategoryAsync(int id, UpdateCategoryDto categoryDTO);
         Task DeleteCategoryAsync(int id);
     }

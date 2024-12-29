@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories.Generic;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.DTOs.Categories;
@@ -11,10 +12,12 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<CategoryItemDto>> GetAllAsync(int page, int take)
@@ -46,22 +49,18 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             return categoryDto;
         }
-        public async Task<bool> CreateCategoryAsync(CreateCategoryDto categoryDTO)
+        public async Task CreateAsync(CreateCategoryDto categoryDto)
         {
-            if (await _categoryRepository.AnyAsync(c => c.Name == categoryDTO.Name))
-                return false;
+            if (await _categoryRepository.AnyAsync(c => c.Name == categoryDto.Name))
+                throw new Exception("Category exist");
 
-            await _categoryRepository.AddAsync(new Category
-            {
-                Name = categoryDTO.Name,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
+            var category = _mapper.Map<Category>(categoryDto);
 
-            });
+            category.CreatedAt = DateTime.Now;
+            category.UpdatedAt = DateTime.Now;
 
+            await _categoryRepository.AddAsync(category);
             await _categoryRepository.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task UpdateCategoryAsync(int id, UpdateCategoryDto categoryDto)
@@ -73,7 +72,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (await _categoryRepository.AnyAsync(c => c.Name == categoryDto.Name && c.Id == id))
                 throw new Exception("Exists");
             category.UpdatedAt = DateTime.Now;
-            category.Name = categoryDto.Name;
+            category = _mapper.Map<Category>(categoryDto);
             _categoryRepository.Update(category);
             await _categoryRepository.SaveChangesAsync();
         }

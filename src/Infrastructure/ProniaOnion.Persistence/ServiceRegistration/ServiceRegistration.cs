@@ -25,6 +25,7 @@ namespace ProniaOnion.Persistence.ServiceRegistration
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+
             return services;
         }
     }
