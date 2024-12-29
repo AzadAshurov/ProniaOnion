@@ -2,7 +2,7 @@
 
 namespace ProniaOnion.Application.Abstractions.Repositories.Generic
 {
-    internal interface IProductRepository : IRepository<Product>
+    public interface IProductRepository : IRepository<Product>
     {
     }
 }

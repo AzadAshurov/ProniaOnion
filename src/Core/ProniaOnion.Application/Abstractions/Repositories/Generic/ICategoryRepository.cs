@@ -2,7 +2,7 @@
 
 namespace ProniaOnion.Application.Abstractions.Repositories.Generic
 {
-    internal interface ICategoryRepository : IRepository<Category>
+    public interface ICategoryRepository : IRepository<Category>
     {
     }
 }

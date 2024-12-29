@@ -2,7 +2,7 @@
 
 namespace ProniaOnion.Application.Abstractions.Repositories.Generic
 {
-    internal interface IColorRepository : IRepository<Color>
+    public interface IColorRepository : IRepository<Color>
     {
     }
 }
