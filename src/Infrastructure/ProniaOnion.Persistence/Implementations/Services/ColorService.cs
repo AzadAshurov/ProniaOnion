@@ -30,6 +30,31 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task<GetColorDto> GetByIdAsync(int id)
         {
             Color color = await _colorRepository.GetByIdAsync(id, "ProductColors.Product");
+            //Color color = new Color()
+            //{
+            //    Id = 1,
+            //    Name = "Red",
+            //    CreatedAt = DateTime.Now,
+            //    UpdatedAt = DateTime.Now,
+            //    ProductColors = new List<ProductColor>()
+            //    {
+            //        new ProductColor()
+            //        {
+            //            ProductId = 1,
+            //            ColorId = 1,
+            //            Product = new Product()
+            //            {
+            //                Id = 1,
+            //                Name = "Product 1",
+            //                SKU = "SKU 1",
+            //                Description = "Description 1",
+            //                Price = 100,
+            //                CreatedAt = DateTime.Now,
+            //                UpdatedAt = DateTime.Now
+            //            }
+            //        }
+            //    }
+            //};
             if (color == null) return null;
             var colorDto = _mapper.Map<GetColorDto>(color);
             return colorDto;

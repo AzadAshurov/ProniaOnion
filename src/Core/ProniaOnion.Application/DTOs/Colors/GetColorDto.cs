@@ -2,5 +2,10 @@
 
 namespace ProniaOnion.Application.DTOs.Colors
 {
-    public class GetColorDto(int Id, string Name, ICollection<ProductItemDto> Products);
+    public class GetColorDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public ICollection<ProductItemDto> Products { get; set; } = new List<ProductItemDto>();
+    }
 }

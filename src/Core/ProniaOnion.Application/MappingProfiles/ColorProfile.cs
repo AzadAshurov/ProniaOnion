@@ -8,6 +8,9 @@ namespace ProniaOnion.Application.MappingProfiles
     {
         public ColorProfile()
         {
+
+            CreateMap<Color, GetColorDto>()
+               .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.ProductColors));
             CreateMap<Color, ColorItemDto>();
             CreateMap<Color, GetColorDto>().ReverseMap();
             CreateMap<CreateColorDto, Color>();
