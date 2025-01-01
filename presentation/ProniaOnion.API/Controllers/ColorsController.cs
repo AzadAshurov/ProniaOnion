@@ -1,27 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Repositories.Generic;
 using ProniaOnion.Application.Abstractions.Services;
-using ProniaOnion.Application.DTOs.Categories;
+using ProniaOnion.Application.DTOs.Colors;
 using ProniaOnion.Domain.Entities;
 
 namespace ProniaOnion.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class ColorsController : Controller
     {
-        private readonly IRepository<Category> _repository;
-        private readonly ICategoryService _categoryService;
+        private readonly IRepository<Color> _repository;
+        private readonly IColorService _colorService;
 
-        public CategoryController(IRepository<Category> repository, ICategoryService categoryService)
+        public ColorsController(IRepository<Color> repository, IColorService colorService)
         {
             _repository = repository;
-            _categoryService = categoryService;
+            _colorService = colorService;
         }
         [HttpGet]
         public async Task<IActionResult> Get(int page = 1, int take = 3)
         {
-            return StatusCode(StatusCodes.Status200OK, await _categoryService.GetAllAsync(page, take));
+            return StatusCode(StatusCodes.Status200OK, await _colorService.GetAllAsync(page, take));
         }
 
         [HttpGet("{id}")]
@@ -29,28 +29,28 @@ namespace ProniaOnion.API.Controllers
         {
             if (id < 1) return BadRequest();
 
-            var categoryDTO = await _categoryService.GetByIdAsync(id);
+            var colorDTO = await _colorService.GetByIdAsync(id);
 
-            if (categoryDTO == null) return NotFound();
+            if (colorDTO == null) return NotFound();
 
-            return StatusCode(StatusCodes.Status200OK, categoryDTO);
+            return StatusCode(StatusCodes.Status200OK, colorDTO);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CreateCategoryDto categoryDTO)
+        public async Task<IActionResult> Create([FromForm] CreateColorDto colorDTO)
         {
-            await _categoryService.CreateAsync(categoryDTO);
+            await _colorService.CreateAsync(colorDTO);
             //    return BadRequest();
-            // await _categoryService.CreateCategoryAsync(id, categoryDTO);
+
             return StatusCode(StatusCodes.Status201Created);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] UpdateCategoryDto categoryDTO)
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateColorDto colorDTO)
         {
             if (id < 1)
                 return BadRequest();
 
-            await _categoryService.UpdateCategoryAsync(id, categoryDTO);
+            await _colorService.UpdateColorAsync(id, colorDTO);
             return StatusCode(StatusCodes.Status204NoContent);
         }
         [HttpDelete("{id}")]
@@ -59,7 +59,7 @@ namespace ProniaOnion.API.Controllers
         {
             if (id < 1)
                 return BadRequest();
-            await _categoryService.DeleteCategoryAsync(id);
+            await _colorService.DeleteColorAsync(id);
             return StatusCode(StatusCodes.Status204NoContent);
         }
     }

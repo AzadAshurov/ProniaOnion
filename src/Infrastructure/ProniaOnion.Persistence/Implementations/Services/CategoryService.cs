@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories.Generic;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.DTOs.Categories;
-using ProniaOnion.Application.DTOs.Products;
 using ProniaOnion.Domain.Entities;
 
 namespace ProniaOnion.Persistence.Implementations.Services
@@ -23,7 +22,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task<IEnumerable<CategoryItemDto>> GetAllAsync(int page, int take)
         {
             IEnumerable<CategoryItemDto> categories = await _categoryRepository.GetAll(skip: (page - 1) * take, take: take)
-                .Select(x => new CategoryItemDto(x.Id, x.Name))
+                .Select(x => _mapper.Map<CategoryItemDto>(x))
             .ToListAsync();
             return categories;
 
@@ -35,7 +34,9 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             if (category == null) return null;
 
-            GetCategoryDto categoryDto = new(category.Id, category.Name, category.Products.Select(p => new ProductItemDto(p.Id, p.Name, p.SKU, p.Description)).ToList());
+
+            // GetCategoryDto categoryDto = new(category.Id, category.Name, category.Products.Select(p => new ProductItemDto(p.Id, p.Name, p.SKU, p.Description)).ToList());
+            var categoryDto = _mapper.Map<GetCategoryDto>(category);
             //{
             //    Id = category.Id,
             //    Name = category.Name,
