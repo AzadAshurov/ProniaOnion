@@ -81,8 +81,10 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             if (await _colorRepository.AnyAsync(c => c.Name == colorDto.Name && c.Id == id))
                 throw new Exception("Exists");
+            _mapper.Map(colorDto, color);
             color.UpdatedAt = DateTime.Now;
-            color = _mapper.Map<Color>(colorDto);
+
+            // color = _mapper.Map<Color>(colorDto);
             _colorRepository.Update(color);
             await _colorRepository.SaveChangesAsync();
         }
