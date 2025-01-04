@@ -13,7 +13,7 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
 
         public Repository(AppDbContext context)
         {
-            Console.Beep();
+           // Console.Beep();
             _context = context;
             _table = context.Set<T>();
         }
@@ -46,8 +46,12 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
                 query = _getIncludes(query, includes);
 
             query = orderExpression != null ? (query = isDescending ? query.OrderByDescending(orderExpression) : query.OrderBy(orderExpression)) : query;
-            query = query.Skip(skip);
-            query = skip != 0 ? query.Take(take) : query;
+            //query = query.Skip(skip);
+            //query = skip != 0 ? query.Take(take) : query;
+            if (skip > 0)
+                query = query.Skip(skip);
+            if (take > 0)
+                query = query.Take(take);
             return isTracking ? query : query.AsNoTracking();
         }
 

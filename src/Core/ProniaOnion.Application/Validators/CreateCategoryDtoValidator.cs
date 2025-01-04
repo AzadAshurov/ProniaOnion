@@ -11,10 +11,6 @@ namespace ProniaOnion.Application.Validators
         public CreateCategoryDtoValidator(ICategoryRepository repository)
         {
             _repository = repository;
-            for (var i = 0; i < 100; i++)
-            {
-                Console.WriteLine("CreateCategoryDtoValidator created");
-            }
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Data required")
                 .MaximumLength(100).WithMessage("Characters should be less than 100")

@@ -4,7 +4,7 @@ using ProniaOnion.Domain.Entities;
 
 namespace ProniaOnion.Application.MappingProfiles
 {
-    internal class ColorProfile : Profile
+   public class ColorProfile : Profile
     {
         public ColorProfile()
         {
