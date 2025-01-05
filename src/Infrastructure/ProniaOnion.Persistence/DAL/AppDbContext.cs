@@ -16,6 +16,10 @@ namespace ProniaOnion.Persistence.DAL
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<BlogTag> BlogTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
