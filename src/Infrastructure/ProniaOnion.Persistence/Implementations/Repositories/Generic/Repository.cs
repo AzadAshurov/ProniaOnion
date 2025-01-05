@@ -60,7 +60,7 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
             IQueryable<T> query = _table;
             if (includes != null)
                 query = _getIncludes(query, includes);
-            return await _table.FirstOrDefaultAsync(x => x.Id == id);
+            return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<int> SaveChangesAsync()
