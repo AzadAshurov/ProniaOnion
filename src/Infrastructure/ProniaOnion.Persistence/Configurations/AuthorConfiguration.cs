@@ -1,5 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Domain.Entities;
 
 namespace ProniaOnion.Persistence.Configurations
@@ -12,10 +17,10 @@ namespace ProniaOnion.Persistence.Configurations
                 .Property(x => x.Name)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
+
             builder
-               .Property(x => x.Surname)
-               .IsRequired()
-               .HasColumnType("varchar(100)");
+                .HasIndex(x => x.Name)
+                .IsUnique();
         }
     }
 }

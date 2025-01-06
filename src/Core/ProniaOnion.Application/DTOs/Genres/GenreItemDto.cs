@@ -1,4 +1,4 @@
-﻿namespace ProniaOnion.Application.DTOs.Categories
+﻿namespace ProniaOnion.Application.DTOs.Genres
 {
     public record GenreItemDto(int Id, string Name);
 
