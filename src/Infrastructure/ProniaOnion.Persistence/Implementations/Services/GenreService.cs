@@ -59,7 +59,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (genre == null)
                 throw new Exception("Not found");
 
-            if (await _genreRepository.AnyAsync(c => c.Name == genreDto.Name && c.Id == id))
+            if (await _genreRepository.AnyAsync(c => c.Name == genreDto.Name && c.Id != id))
                 throw new Exception("Exists");
             _mapper.Map(genreDto, genre);
             genre.UpdatedAt = DateTime.Now;

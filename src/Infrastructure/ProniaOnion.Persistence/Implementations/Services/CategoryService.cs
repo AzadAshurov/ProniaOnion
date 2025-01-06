@@ -70,7 +70,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (category == null)
                 throw new Exception("Not found");
 
-            if (await _categoryRepository.AnyAsync(c => c.Name == categoryDto.Name && c.Id == id))
+            if (await _categoryRepository.AnyAsync(c => c.Name == categoryDto.Name && c.Id != id))
                 throw new Exception("Exists");
             _mapper.Map(categoryDto, category);
             category.UpdatedAt = DateTime.Now;

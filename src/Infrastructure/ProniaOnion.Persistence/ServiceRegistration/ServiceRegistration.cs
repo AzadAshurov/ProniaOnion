@@ -29,9 +29,9 @@ namespace ProniaOnion.Persistence.ServiceRegistration
             services.AddScoped<ISizeRepository, SizeRepository>();
             services.AddScoped<ISizeService, SizeService>();
             services.AddScoped<IBlogRepository, BlogRepository>();
-        //    services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-        //    services.AddScoped<IAuthorService, AuthorService>();
+           services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

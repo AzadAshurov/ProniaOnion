@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.DTOs.Blogs
 {
-    public record BlogItemDto(int Id, string Name, string Surname);
+    public record BlogItemDto(int Id, string Title, string Article);
 }

@@ -60,7 +60,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (size == null)
                 throw new Exception("Not found");
 
-            if (await _sizeRepository.AnyAsync(c => c.Name == sizeDto.Name && c.Id == id))
+            if (await _sizeRepository.AnyAsync(c => c.Name == sizeDto.Name && c.Id != id))
                 throw new Exception("Exists");
             _mapper.Map(sizeDto, size);
             size.UpdatedAt = DateTime.Now;

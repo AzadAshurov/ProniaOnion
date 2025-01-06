@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.DTOs.Authors
 {
-    public class UpdateAuthorDto(string Name, string Surname, string ProfileImage);
+    public record UpdateAuthorDto(string Name, string Surname, string ProfileImage);
 }

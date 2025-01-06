@@ -55,7 +55,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (tag == null)
                 throw new Exception("Not found");
 
-            if (await _tagRepository.AnyAsync(c => c.Name == tagDto.Name && c.Id == id))
+            if (await _tagRepository.AnyAsync(c => c.Name == tagDto.Name && c.Id != id))
                 throw new Exception("Exists");
             _mapper.Map(tagDto, tag);
             tag.UpdatedAt = DateTime.Now;
