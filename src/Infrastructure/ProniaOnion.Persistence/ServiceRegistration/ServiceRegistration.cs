@@ -14,13 +14,13 @@ namespace ProniaOnion.Persistence.ServiceRegistration
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {  
-            //test
             services
                 .AddDbContext<AppDbContext>(opt =>
                     opt.UseSqlServer(configuration.GetConnectionString("HomeLaptop"))
-                );
+                ); 
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
