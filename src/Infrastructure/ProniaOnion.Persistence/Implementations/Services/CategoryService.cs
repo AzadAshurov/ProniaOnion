@@ -52,8 +52,19 @@ namespace ProniaOnion.Persistence.Implementations.Services
         }
         public async Task CreateAsync(CreateCategoryDto categoryDto)
         {
-            if (await _categoryRepository.AnyAsync(c => c.Name == categoryDto.Name))
-                throw new Exception("Category exist");
+            //if (await _categoryRepository.AnyAsync(c => c.Name == categoryDto.Name))
+            //    throw new Exception("Category exist");
+
+
+            // ValidationResult result = await _validator.ValidateAsync(categoryDto);
+            // if (!result.IsValid)
+            // {
+            //     foreach (ValidationFailure error in result.Errors)
+            //     {
+            //         ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            //     }
+            //     return BadRequest(ModelState);
+            // } 
 
             var category = _mapper.Map<Category>(categoryDto);
 

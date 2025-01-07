@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories.Generic;
 using ProniaOnion.Application.Abstractions.Services;
@@ -35,7 +30,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
         public async Task<GetBlogDto> GetByIdAsync(int id)
         {
-            Blog blog = await _blogRepository.GetByIdAsync(id, nameof(Blog.BlogTags));
+            Blog blog = await _blogRepository.GetByIdAsync(id, "blog => blog.Tags.Where(op => op.blogId == blog.Id).Select(p => p.Tag)");
             if (blog == null) return null;
             var blogDto = _mapper.Map<GetBlogDto>(blog);
             return blogDto;

@@ -16,7 +16,7 @@ namespace ProniaOnion.Persistence.ServiceRegistration
         {
             services
                 .AddDbContext<AppDbContext>(opt =>
-                    opt.UseSqlServer(configuration.GetConnectionString("HomeLaptop"))
+                    opt.UseSqlServer(configuration.GetConnectionString("Univer"))
                 );
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -31,7 +31,7 @@ namespace ProniaOnion.Persistence.ServiceRegistration
             services.AddScoped<IBlogRepository, BlogRepository>();
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-           services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
