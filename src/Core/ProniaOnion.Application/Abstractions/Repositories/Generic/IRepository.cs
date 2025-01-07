@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using ProniaOnion.Domain.Entities.Base;
+﻿using ProniaOnion.Domain.Entities.Base;
+using System.Linq.Expressions;
 
 namespace ProniaOnion.Application.Abstractions.Repositories.Generic
 {
@@ -12,6 +12,7 @@ namespace ProniaOnion.Application.Abstractions.Repositories.Generic
        int take = 0,
        bool isDescending = false,
        bool isTracking = false,
+       bool ignoreQuery = false,
        params string[]? includes);
         Task<T> GetByIdAsync(int id, params string[] includes);
         Task AddAsync(T entity);

@@ -1,8 +1,8 @@
-﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories.Generic;
 using ProniaOnion.Domain.Entities.Base;
 using ProniaOnion.Persistence.DAL;
+using System.Linq.Expressions;
 
 namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
 {
@@ -13,7 +13,7 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
 
         public Repository(AppDbContext context)
         {
-           // Console.Beep();
+            // Console.Beep();
             _context = context;
             _table = context.Set<T>();
         }
@@ -35,6 +35,7 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
        int take = 0,
        bool isDescending = false,
        bool isTracking = false,
+       bool ignoreQuery = false,
        params string[]? includes)
         {
             IQueryable<T> query = _table;
@@ -52,6 +53,7 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
                 query = query.Skip(skip);
             if (take > 0)
                 query = query.Take(take);
+            if (ignoreQuery) query.IgnoreQueryFilters();
             return isTracking ? query : query.AsNoTracking();
         }
 
