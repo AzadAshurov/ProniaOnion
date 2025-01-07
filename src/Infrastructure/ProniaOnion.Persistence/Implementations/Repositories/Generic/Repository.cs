@@ -27,7 +27,10 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
         {
             _table.Remove(entity);
         }
-
+        //public void SoftDelete(T entity)
+        //{
+        //    _table.Update(entity);
+        //}
         public IQueryable<T> GetAll(
        Expression<Func<T, bool>>? expression = null,
        Expression<Func<T, object>>? orderExpression = null,

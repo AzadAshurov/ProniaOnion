@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Domain.Entities;
+using ProniaOnion.Domain.Entities.Base;
+using ProniaOnion.Persistence.Common;
 using System.Reflection;
 
 namespace ProniaOnion.Persistence.DAL
@@ -23,9 +25,30 @@ namespace ProniaOnion.Persistence.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>().HasQueryFilter(c => c.IsDeleted == true);
+            // modelBuilder.Entity<Category>().HasQueryFilter(c => c.IsDeleted == true);
+            modelBuilder.ApplyQueryFilters();
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var data = ChangeTracker.Entries<BaseEntity>();
+            foreach (var item in data)
+            {
+                switch (item.State)
+                {
+                    case EntityState.Modified:
+                        item.Entity.UpdatedAt = DateTime.Now;
+                        break;
+                    case EntityState.Added:
+                        item.Entity.CreatedBy = "admin";
+                        item.Entity.CreatedAt = DateTime.Now;
+                        item.Entity.UpdatedAt = DateTime.Now;
+                        break;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

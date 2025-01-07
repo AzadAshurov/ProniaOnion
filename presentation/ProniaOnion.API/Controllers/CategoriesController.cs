@@ -62,5 +62,13 @@ namespace ProniaOnion.API.Controllers
             await _categoryService.DeleteCategoryAsync(id);
             return StatusCode(StatusCodes.Status204NoContent);
         }
+        [HttpDelete("soft/{id}")]
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            if (id < 1)
+                return BadRequest();
+            await _categoryService.SoftDeleteCategoryAsync(id);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
     }
 }
