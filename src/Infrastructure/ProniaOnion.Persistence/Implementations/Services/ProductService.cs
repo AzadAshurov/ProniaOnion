@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories.Generic;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.DTOs.Products;
+using ProniaOnion.Domain.Entities;
 
 namespace ProniaOnion.Persistence.Implementations.Services
 {
@@ -22,6 +18,18 @@ namespace ProniaOnion.Persistence.Implementations.Services
             _mapper = mapper;
         }
 
+        public async Task CreateAsync(CreateProductDto productDto)
+        {
+            var blog = _mapper.Map<Product>(productDto);
+
+            blog.CreatedAt = DateTime.Now;
+            blog.UpdatedAt = DateTime.Now;
+
+            await _productRepository.AddAsync(blog);
+            await _productRepository.SaveChangesAsync();
+
+        }
+
         public async Task<IEnumerable<ProductItemDto>> GetAllAsync(int page, int take)
         {
             var products = _mapper.Map<IEnumerable<ProductItemDto>>(
@@ -32,7 +40,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
         public async Task<GetProductDto> GetByIdAsync(int id)
         {
-            var prod = _mapper.Map<GetProductDto>( await _productRepository.GetByIdAsync(id, "Category","ProductColors", "ProductColors.Color"));
+            var prod = _mapper.Map<GetProductDto>(await _productRepository.GetByIdAsync(id, "Category", "ProductColors", "ProductColors.Color"));
             return prod;
         }
     }

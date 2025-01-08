@@ -13,11 +13,21 @@ namespace ProniaOnion.Persistence.ServiceRegistration
     public static class ServiceRegistration
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
-        {  
+        {
+            //services
+            //    .AddDbContext<AppDbContext>(opt =>
+            //        opt.UseSqlServer(configuration.GetConnectionString("HomeLaptop"))
+            //    );
+
+            //services
+            //    .AddDbContext<AppDbContext>(opt =>
+            //        opt.UseSqlServer(configuration.GetConnectionString("Home"))
+            //    );
+
             services
                 .AddDbContext<AppDbContext>(opt =>
-                    opt.UseSqlServer(configuration.GetConnectionString("HomeLaptop"))
-                ); 
+                    opt.UseSqlServer(configuration.GetConnectionString("Univer"))
+                );
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductService, ProductService>();
