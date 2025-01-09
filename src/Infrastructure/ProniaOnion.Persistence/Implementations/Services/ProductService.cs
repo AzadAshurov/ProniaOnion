@@ -10,24 +10,30 @@ namespace ProniaOnion.Persistence.Implementations.Services
     internal class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IColorRepository _colorRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository productRepository, IMapper mapper)
+        public ProductService(IProductRepository productRepository,ICategoryRepository categoryRepository,IColorRepository colorRepository, IMapper mapper)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
+            _colorRepository = colorRepository;
             _mapper = mapper;
         }
 
         public async Task CreateAsync(CreateProductDto productDto)
         {
-            var blog = _mapper.Map<Product>(productDto);
+            if (!await _categoryRepository.AnyAsync(c => c.Id == productDto.CategoryId))
+                throw new Exception("Category does not exist");
 
-            blog.CreatedAt = DateTime.Now;
-            blog.UpdatedAt = DateTime.Now;
+            var colorEntities = await _productRepository.GetManyToManyEntities<Color>(productDto.ColorIds);
 
-            await _productRepository.AddAsync(blog);
+            if (colorEntities.Count() != productDto.ColorIds.Distinct().Count())
+                throw new Exception("Color id is wrong");
+
+            await _productRepository.AddAsync(_mapper.Map<Product>(productDto));
             await _productRepository.SaveChangesAsync();
-
         }
 
         public async Task<IEnumerable<ProductItemDto>> GetAllAsync(int page, int take)

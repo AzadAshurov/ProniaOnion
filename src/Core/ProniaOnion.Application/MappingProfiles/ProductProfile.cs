@@ -11,7 +11,7 @@ namespace ProniaOnion.Application.MappingProfiles
         public ProductProfile()
         {
             CreateMap<Product, ProductItemDto>().ReverseMap();
-            CreateMap<CreateProductDto, Product>();
+            CreateMap<CreateProductDto, Product>().ForMember(x => x.ProductColors, opt => opt.MapFrom(pDto => pDto.ColorIds.Select(ci => new ProductColor { ColorId = ci })));
             CreateMap<Product, GetProductDto>()
     .ForCtorParam(
         nameof(GetProductDto.Colors),
