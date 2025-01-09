@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 using ProniaOnion.Application.DTOs.Products;
-using ProniaOnion.Application.DTOs.Sizes;
 
 namespace ProniaOnion.Application.Validators
 {
-  public class CreateProductDtoValidator : AbstractValidator<CreateProductDto>
+    public class UpdateProductDtoValidator : AbstractValidator<UpdateProductDto>
     {
         public const int NAME_MAX_LENGTH = 100;
 
-        public CreateProductDtoValidator()
+        public UpdateProductDtoValidator()
         {
             RuleFor(p => p.Name)
                 .NotEmpty()

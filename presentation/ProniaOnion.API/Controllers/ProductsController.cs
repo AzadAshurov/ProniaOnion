@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
+using ProniaOnion.Application.DTOs.Colors;
 using ProniaOnion.Application.DTOs.Products;
+using ProniaOnion.Persistence.Implementations.Services;
 
 namespace ProniaOnion.API.Controllers
 {
@@ -31,6 +33,16 @@ namespace ProniaOnion.API.Controllers
         {
             await _service.CreateAsync(productDto);
             return StatusCode(StatusCodes.Status201Created);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateProductDto productDTO)
+        {
+            if (id < 1)
+                return BadRequest();
+
+            await _service.UpdateAsync(id, productDTO);
+            return StatusCode(StatusCodes.Status204NoContent);
         }
     }
 }

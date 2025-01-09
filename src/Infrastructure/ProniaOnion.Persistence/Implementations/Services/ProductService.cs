@@ -49,5 +49,31 @@ namespace ProniaOnion.Persistence.Implementations.Services
             var prod = _mapper.Map<GetProductDto>(await _productRepository.GetByIdAsync(id, "Category", "ProductColors", "ProductColors.Color"));
             return prod;
         }
+        public async Task UpdateAsync(int id, UpdateProductDto productDto)
+        {
+            Product product = await _productRepository.GetByIdAsync(id, "ProductColors");
+
+            if (productDto.CategoryId != product.CategoryId)
+            {
+                 if (!await _categoryRepository.AnyAsync(c => c.Id == productDto.CategoryId))
+                {
+                    throw new Exception("Category does not exist");
+                }
+            }
+
+            ICollection<int> createItems = productDto.ColorIds
+                .Where(cId => !product.ProductColors.Any(pc => pc.ColorId == cId))
+                .ToList();
+
+            var colorEntities = await _productRepository.GetManyToManyEntities<Color>(createItems);
+              
+
+            if (colorEntities.Count() != createItems.Distinct().Count())
+            {
+                throw new Exception("One or more Color Id is wrong");
+            }
+            _productRepository.Update(_mapper.Map(productDto, product));
+            await _productRepository.SaveChangesAsync();
+        }
     }
 }
