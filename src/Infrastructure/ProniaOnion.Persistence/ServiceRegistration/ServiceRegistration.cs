@@ -14,20 +14,20 @@ namespace ProniaOnion.Persistence.ServiceRegistration
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services
-                .AddDbContext<AppDbContext>(opt =>
-                    opt.UseSqlServer(configuration.GetConnectionString("HomeLaptop"))
-                );
+            //services
+            //    .AddDbContext<AppDbContext>(opt =>
+            //        opt.UseSqlServer(configuration.GetConnectionString("HomeLaptop"))
+            //    );
 
             //services
             //    .AddDbContext<AppDbContext>(opt =>
             //        opt.UseSqlServer(configuration.GetConnectionString("Home"))
             //    );
 
-            //services
-            //    .AddDbContext<AppDbContext>(opt =>
-            //        opt.UseSqlServer(configuration.GetConnectionString("Univer"))
-            //    );
+            services
+                .AddDbContext<AppDbContext>(opt =>
+                    opt.UseSqlServer(configuration.GetConnectionString("Univer"))
+                );
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductService, ProductService>();
@@ -35,14 +35,19 @@ namespace ProniaOnion.Persistence.ServiceRegistration
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IColorService, ColorService>();
+
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ITagService, TagService>();
+
             services.AddScoped<ISizeRepository, SizeRepository>();
             services.AddScoped<ISizeService, SizeService>();
+
             services.AddScoped<IBlogRepository, BlogRepository>();
             services.AddScoped<IBlogService, BlogService>();
+
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IAuthorService, AuthorService>();
+
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
