@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.DTOs.AppUsers;
 using ProniaOnion.Domain.Entities.Identity;
+using System.Text;
 
 namespace ProniaOnion.Persistence.Implementations.Services
 {
@@ -21,6 +17,19 @@ namespace ProniaOnion.Persistence.Implementations.Services
         {
             _userManager = userManager;
             _mapper = mapper;
+        }
+
+        public async Task LoginAsync(LoginDto userDto)
+        {
+            AppUser? user = userDto.UserNameOrEmail.Contains("@") ? await _userManager.Users.FirstOrDefaultAsync(x => x.Email == userDto.UserNameOrEmail) : await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == userDto.UserNameOrEmail);
+            if (user == null)
+                throw new Exception("Username , Email or Password is invalid");
+            bool result = await _userManager.CheckPasswordAsync(user, userDto.Password);
+            if (!result)
+            {
+                await _userManager.AccessFailedAsync(user);
+                throw new Exception("Username , Email or Password is invalid");
+            }
         }
 
         public async Task RegisterAsync(RegisterDto userDto)
