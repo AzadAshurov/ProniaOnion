@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +9,7 @@ using ProniaOnion.Persistence.DAL;
 using ProniaOnion.Persistence.Implementations.Repositories;
 using ProniaOnion.Persistence.Implementations.Repositories.Generic;
 using ProniaOnion.Persistence.Implementations.Services;
+using System.Reflection;
 
 namespace ProniaOnion.Persistence.ServiceRegistration
 {
@@ -18,14 +18,15 @@ namespace ProniaOnion.Persistence.ServiceRegistration
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             string connection;
-            switch (1) {
+            switch (3)
+            {
                 case 1:
                     connection = "HomeLaptop";
                     break;
-                 case 2:
-                 connection = "Home";
+                case 2:
+                    connection = "Home";
                     break;
-                    case 3:
+                case 3:
                     connection = "Univer";
                     break;
             }
@@ -84,7 +85,7 @@ namespace ProniaOnion.Persistence.ServiceRegistration
 
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            
+
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IAuthorService, AuthorService>();
 
